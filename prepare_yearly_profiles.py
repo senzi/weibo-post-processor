@@ -1,5 +1,6 @@
 from collections import defaultdict
 import os
+import re
 
 input_path = "weibo_originals.txt"
 output_dir = "year_chunks"
@@ -21,13 +22,20 @@ prompt = """下面是一个人一年内所有的微博发言（不含转发内�
 最后，请你尝试根据这些发言的语言方式、表达倾向与思维特征，推测这个人的 MBTI 类型，并自然地融入描述之中。你不需要将其作为一个分析模块独立列出，而是像一位理解深刻的读者，顺势地说出“我觉得他/她可能是……”并进一步解释原因。请让这个人格推测成为对这个人整体描写的有机延伸，而不是附加标签。
 """
 
+# 新增日期模式
+date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}\s')
+
+def is_valid_weibo_line(line):
+    """判断是否是有效的微博条目"""
+    return bool(date_pattern.match(line))
+
 def build_chunks(input_path):
     lines_by_year = defaultdict(list)
 
     with open(input_path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if not line or not line[:4].isdigit():
+            if not line or not is_valid_weibo_line(line):
                 continue
             year = line[:4]
             content = line[11:].strip()
@@ -44,3 +52,4 @@ def build_chunks(input_path):
 
 if __name__ == "__main__":
     build_chunks(input_path)
+

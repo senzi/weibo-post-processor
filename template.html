@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>智搜：微博年度总结</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary-color: #f2b3a2;
+      --primary-dark: #e99a89;
+      --primary-light: #ffd1c7;
+      --text-color: #4a3636;
+      --bg-color: #fff9f8;
+      --accent-color: #ffb7c5;
+      --footer-color: #ffeae5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.8;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      font-size: 1.6rem;
+      box-shadow: 0 2px 8px rgba(242, 179, 162, 0.3);
+      border-bottom: 3px solid var(--primary-dark);
+      position: relative;
+    }
+
+    header .subtitle {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      opacity: 0.9;
+    }
+
+    header::before, header::after {
+      content: "✨";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+    }
+
+    header::before { left: 1rem; }
+    header::after { right: 1rem; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: var(--primary-light);
+      border-bottom: 1px solid var(--primary-color);
+      flex-wrap: wrap;
+      padding: 0.5rem 0;
+    }
+
+    nav button {
+      padding: 0.8rem 1.2rem;
+      margin: 0.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      background-color: white;
+      color: var(--text-color);
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      font-weight: 500;
+    }
+
+    nav button.active {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(242, 179, 162, 0.4);
+    }
+
+    nav button:hover {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(242, 179, 162, 0.2);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .section p {
+      margin-bottom: 1.2em;
+      text-indent: 2em;
+      font-size: 1.05rem;
+    }
+
+    .year-title {
+      text-align: center;
+      color: var(--primary-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px dashed var(--primary-light);
+    }
+
+    footer {
+      background-color: var(--footer-color);
+      padding: 1.2rem;
+      text-align: center;
+      border-top: 2px solid var(--primary-light);
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+
+    footer p {
+      margin: 0.5rem 0;
+      opacity: 0.85;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    微博年度总结
+    <div class="subtitle">记录成长、感悟与改变</div>
+  </header>
+
+  <!-- tabs 按钮栏 -->
+  <nav id="nav-tabs">
+    <!-- inject_tabs_here -->
+  </nav>
+
+  <main>
+    <div class="content" id="content-sections">
+      <!-- inject_sections_here -->
+    </div>
+  </main>
+
+  <footer>
+    <p>本微博总结基于 GPT 视角生成</p>
+    <p>© 2025 - 内容仅供参考，不代表原博主观点</p>
+  </footer>
+
+  <script>
+    function show(id) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`nav button[onclick="show('${id}')"]`).classList.add('active');
+    }
+  </script>
+</body>
+</html>
+

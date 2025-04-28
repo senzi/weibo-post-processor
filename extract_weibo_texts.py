@@ -23,6 +23,15 @@ def clean_html_links(text):
     """删除所有<a href=...>标签"""
     return re.sub(r'<a .*?href=.*?>|</a>', '', text)
 
+def remove_urls(text):
+    """删除所有 URL，包括 http(s)://，weibo.com，短链"""
+    url_pattern = r'(https?://\S+|www\.\S+|weibo\.com/\S+)'
+    return re.sub(url_pattern, '', text)
+
+def replace_html_breaks(text):
+    """把 <br> <br/> <br /> 转成换行符"""
+    return re.sub(r'(?i)<br\s*/?>', '\n', text)
+
 def extract_my_text(s):
     if not isinstance(s, str):
         return ""
@@ -33,6 +42,9 @@ def extract_my_text(s):
 
     # 删除 HTML 标签
     s = clean_html_links(s)
+
+    # 删除 URL
+    s = remove_urls(s)
 
     # 判断是否是纯转发（开头是 // 或其 HTML 变体）
     if re.match(r'^//(\s|<a|@|http|weibo\.com)', s):
@@ -82,10 +94,12 @@ for w in weibo_list:
 
 with open(output_originals, "w", encoding="utf-8") as f:
     for line in originals:
+        line = replace_html_breaks(line)
         f.write(line + "\n")
 
 with open(output_retweets, "w", encoding="utf-8") as f:
     for line in retweets:
+        line = replace_html_breaks(line)
         f.write(line + "\n")
 
 print(f"✅ 已输出 {len(originals)} 条原创 到 {output_originals}")

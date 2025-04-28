@@ -172,3 +172,13 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+.DS_Store
+
+weibo-data.json
+
+weibo_originals.txt
+weibo_retweets.txt
+
+/year_chunks/*.txt
+/result/*.txt
